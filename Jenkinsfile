@@ -1,73 +1,36 @@
-// Jenkinsfile (Declarative Pipeline)
-// 这个直接运行失败了，没搞懂
 pipeline{
-    agent any
+    agent{
+        docker {
+            image 'node:14-alphine'
+        }
+    }
     stages{
-        // stage("build"){
-        //     steps{
-        //         sh 'php --version'
-        //         echo "========executing get php version========"
-        //     }
-            
-        //     steps {
-        //         sh 'echo "hello world"'
-        //         sh '''
-        //             echo "Multiline shell steps works too"
-        //             ls -lah
-        //         '''
-        //     }
-        // }
-
-        // stage('Test') {
-        //     steps {
-        //         sh 'echo "Fail!"; exit 1'
-        //     }    
-        // }
-        
-        // 超时 重试
-        stage("Deloy"){
+        stage("Test"){
             steps{
-                retry(3) {
-                    echo "====++++executing Deloy++++===="
+                sh 'node --version'
+            }
+            post{
+                always{
+                    echo "========always========"
                 }
-                timeout(time: 3, unit: 'SECONDS') {
-                    echo "====++++health-check++++===="
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
                 }
             }
-            
-            // 卧槽，连 steps 也只能有一个吗？
-            // steps {
-            //     timeout(time: 3, unit: 'SECONDS') {
-            //         retry(5) {
-            //             echo "./flakey-deloy.sh" 
-            //         }
-            //     }     
-            // }
         }
-        
     }
-    
-    // 完成执行后的清理阶段
-    post {
-         always {
-             echo 'This will always run'
-         }
-         
-         success {
-             echo 'This will run only if successful'
-         }
-         
-         failure {
-             echo 'This wll run only if failed'
-         }
-         
-         unstable {
-             echo 'This will run only if the run was marked as unstable'
-         }
-         
-         changed {
-             echo 'This will run only if the state of the Pipleline has changed'
-             echo 'For example, if the Pipeline was previously failing but is now successful'
-         }
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
     }
 }
