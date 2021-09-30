@@ -4,6 +4,7 @@ pipeline{
         docker {
             image 'php'
         }
+        any
     }
     stages{
         stage("build"){
