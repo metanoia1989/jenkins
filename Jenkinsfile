@@ -35,13 +35,14 @@ pipeline{
                 }
             }
             
-            steps {
-                timeout(time: 3, unit: 'SECONDS') {
-                    retry(5) {
-                        echo "./flakey-deloy.sh" 
-                    }
-                }     
-            }
+            // 卧槽，连 steps 也只能有一个吗？
+            // steps {
+            //     timeout(time: 3, unit: 'SECONDS') {
+            //         retry(5) {
+            //             echo "./flakey-deloy.sh" 
+            //         }
+            //     }     
+            // }
         }
         
     }
