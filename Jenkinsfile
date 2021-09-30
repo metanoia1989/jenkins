@@ -1,27 +1,28 @@
 // Jenkinsfile (Declarative Pipeline)
+// 这个直接运行失败了，没搞懂
 pipeline{
     agent any
     stages{
-        stage("build"){
-            steps{
-                sh 'php --version'
-                echo "========executing get php version========"
-            }
+        // stage("build"){
+        //     steps{
+        //         sh 'php --version'
+        //         echo "========executing get php version========"
+        //     }
             
-            steps {
-                sh 'echo "hello world"'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
-                '''
-            }
-        }
+        //     steps {
+        //         sh 'echo "hello world"'
+        //         sh '''
+        //             echo "Multiline shell steps works too"
+        //             ls -lah
+        //         '''
+        //     }
+        // }
 
-        stage('Test') {
-            steps {
-                sh 'echo "Fail!"; exit 1'
-            }    
-        }
+        // stage('Test') {
+        //     steps {
+        //         sh 'echo "Fail!"; exit 1'
+        //     }    
+        // }
         
         // 超时 重试
         stage("Deloy"){
